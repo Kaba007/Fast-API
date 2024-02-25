@@ -1,7 +1,18 @@
 from pydantic import BaseModel, EmailStr
 from datetime import datetime
-from typing import Optional
+from typing import Optional, List
 from pydantic.types import conint
+
+class Comment(BaseModel):
+    id :int
+    post_id:int
+    user_id :int
+    content :str
+    
+    
+    class Config:
+        from_attributes = True
+
 class UserCreate(BaseModel):
     email: EmailStr
     password : str
@@ -57,3 +68,16 @@ class TokenData(PostBase):
 class Vote(BaseModel):
     post_id: int
     dir : int 
+
+
+class Postdetails(BaseModel):
+    Post: PostResponse
+   
+    comments: List[Comment]=[]
+    votes: int
+
+class CommentIn(BaseModel):
+    content:str    
+class CommandOUT(BaseModel):
+    id:int
+    ts:datetime  
